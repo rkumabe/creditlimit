@@ -37,6 +37,7 @@ public class CreditLimitService {
 		default:
 			throw new BusinessException("Risco inválido!");
 		}
+		
 		return creditLimitRepository.save(creditLimit);
 	}
 	
@@ -54,5 +55,27 @@ public class CreditLimitService {
     	}
     	
     }
+
+	public CreditLimit update(CreditLimit creditLimit) throws BusinessException {
+		switch (creditLimit.getRisk()) {
+		case A:
+			creditLimit.setFees(new BigDecimal(0.00));			
+			break;
+		case B:
+			creditLimit.setFees(new BigDecimal(10.00));
+			break;
+		case C:
+			creditLimit.setFees(new BigDecimal(20.00));
+			break;
+		default:
+			throw new BusinessException("Risco inválido!");
+		}
+		
+		return creditLimitRepository.save(creditLimit);		
+	}
+	
+	public void delete(Long id) throws BusinessException {
+		creditLimitRepository.deleteById(id);
+	}
 
 }
