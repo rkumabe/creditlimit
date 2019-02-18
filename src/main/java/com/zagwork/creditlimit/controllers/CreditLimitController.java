@@ -2,12 +2,11 @@ package com.zagwork.creditlimit.controllers;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +20,7 @@ import com.zagwork.creditlimit.services.CreditLimitService;
 
 @RestController
 @RequestMapping("/creditLimit")
+@CrossOrigin("${allow-origin}")
 public class CreditLimitController {
 	@Autowired
 	private CreditLimitService creditLimitService;
@@ -35,7 +35,7 @@ public class CreditLimitController {
 	}
 		
 	@RequestMapping(value = "/new/save", method = RequestMethod.POST)
-	public ResponseEntity<?> save(@Valid @RequestBody CreditLimit creditLimit, UriComponentsBuilder uriComponentsBuilder) throws ApplicationException {
+	public ResponseEntity<?> save(@RequestBody CreditLimit creditLimit, UriComponentsBuilder uriComponentsBuilder) throws ApplicationException {
 		creditLimitService.validate(creditLimit);
 		CreditLimit db = creditLimitService.save(creditLimit);		
 		HttpHeaders headers = new HttpHeaders();
@@ -53,7 +53,7 @@ public class CreditLimitController {
     }
 	
 	@RequestMapping(value = "/edit/save/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> update(@PathVariable("id") Long id, @Valid @RequestBody CreditLimit creditLimit, UriComponentsBuilder uriComponentsBuilder) throws ApplicationException {
+	public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody CreditLimit creditLimit, UriComponentsBuilder uriComponentsBuilder) throws ApplicationException {
 		CreditLimit current = creditLimitService.getOne(id);
  
         if (current == null) {

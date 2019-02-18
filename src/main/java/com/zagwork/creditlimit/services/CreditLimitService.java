@@ -29,10 +29,10 @@ public class CreditLimitService {
 			creditLimit.setFees(new BigDecimal(0.00));			
 			break;
 		case B:
-			creditLimit.setFees(new BigDecimal(10.00));
+			creditLimit.setFees(new BigDecimal(0.10));
 			break;
 		case C:
-			creditLimit.setFees(new BigDecimal(20.00));
+			creditLimit.setFees(new BigDecimal(0.20));
 			break;
 		default:
 			throw new BusinessException("Risco inválido!");
